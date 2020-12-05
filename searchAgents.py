@@ -52,6 +52,9 @@ class BFSAgent(Agent):
   queue = []
   visited = []
   actions = []
+  initCorX = 9
+  initCorY = 1
+
 
   def getAction(self, gameState):
 
@@ -82,10 +85,15 @@ class BFSAgent(Agent):
       return value should be one of the direction Pac-man can move ('North','South'....)
     """
     "*** YOUR CODE HERE ***"
+
     if len(BFSAgent.actions) != 0:
+        corX = list(gameState.getPacmanPosition())[0] - BFSAgent.initCorX
+        corY = list(gameState.getPacmanPosition())[1] - BFSAgent.initCorY
+        coordinates = '(' + str(corX) + ',' + str(corY) + ')' + '\n'
+        file = open('results.txt', 'a')
+        file.write(coordinates)
+
         return BFSAgent.actions.pop(0)
-
-
 
     BFSAgent.queue.append((gameState, []))
     BFSAgent.visited.append(gameState)
@@ -93,11 +101,13 @@ class BFSAgent(Agent):
     while BFSAgent.queue:
         (state, path) = BFSAgent.queue.pop(0)
 
-        print(state)
+        # print(state)
 
         if state.isWin():
             BFSAgent.actions = path
             print("You Won!")
+            file = open('results.txt', 'a')
+            file.write('(0,0)\n')
             return BFSAgent.actions.pop(0)
 
         legal = state.getLegalPacmanActions()

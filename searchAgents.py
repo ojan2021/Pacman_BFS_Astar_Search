@@ -9,9 +9,8 @@
 from util import manhattanDistance
 from game import Directions
 import random, util
-import time
 from game import Agent
-import game
+
 ##this is example agents
 class LeftTurnAgent(Agent):
   "An agent that turns left at every opportunity"
@@ -106,7 +105,7 @@ class BFSAgent(Agent):
         if state.isWin():
             BFSAgent.actions = path
             print("You Won!")
-            file = open('results.txt', 'a')
+            file = open('results.txt', 'w')
             file.write('(0,0)\n')
             return BFSAgent.actions.pop(0)
 
@@ -133,6 +132,9 @@ class AstarAgent(Agent):
     headers.
 
   """
+  queue = []
+  visited = []
+
   def __init__(self):
     self.path = None
     self.isCallAstar = False
@@ -197,6 +199,8 @@ class AstarAgent(Agent):
         else: return 'West'
 
 class Node:
+    cor = []
+
     """
     The value is presence of wall, so it is True or False.
     The parent is previous position. The point is the position of Node.
@@ -234,7 +238,7 @@ def aStar(start, goal, maps):
     For example, if the starting point is (9, 1) and the goal point is (1, 8), you
     return the path like this.
 
-    
+
     (9, 1) <- top
     (8, 1)
 
@@ -243,11 +247,17 @@ def aStar(start, goal, maps):
     (1, 7)
     (1, 8) <- bottom
     """
-    path = util.Stack()
-
 
     "*** YOUR CODE HERE ***"
+    path = util.Stack()
+    deneme = open('results2.txt','r').read().splitlines()
+    piu = []
+
+    for i in deneme:
+        piu.append(int(i[1]))
+        piu.append(int(i[3]))
+        path.push(piu)
+        piu.clear()
+
 
     return path
-
-
